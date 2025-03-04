@@ -1,0 +1,157 @@
+[gd_scene load_steps=6 format=3 uid="uid://hrbr6oqq76o"]
+
+[ext_resource type="Script" path="res://assets/objects/player.gd" id="1_4ojf7"]
+[ext_resource type="Script" path="res://assets/objects/circle.gd" id="1_ywvrp"]
+
+[sub_resource type="Animation" id="Animation_wg0hn"]
+resource_name = "close_eyes"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EyeLids:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(256, 128), Vector2(256, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EyeLids:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(-128, -64), Vector2(-128, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EyeLids/EyesOrigin:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0, -64), Vector2(0, -128)]
+}
+
+[sub_resource type="Animation" id="Animation_cv3ko"]
+resource_name = "open_eyes"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EyeLids:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(256, 0), Vector2(256, 128)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EyeLids:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(-128, 0), Vector2(-128, -64)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EyeLids/EyesOrigin:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0, -128), Vector2(0, -64)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nvll6"]
+_data = {
+"close_eyes": SubResource("Animation_wg0hn"),
+"open_eyes": SubResource("Animation_cv3ko")
+}
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("animation_player", "pupils", "blink_timer")]
+script = ExtResource("1_4ojf7")
+pupil_offset = Vector2(24, 32)
+pupil_duration = 0.1
+blink_time_min = 0.5
+blink_time_max = 4.0
+animation_player = NodePath("AnimationPlayer")
+pupils = NodePath("EyeLids/EyesOrigin/Eyes/Pupils")
+blink_timer = NodePath("BlinkTimer")
+
+[node name="EyeLids" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -128.0
+offset_top = -64.0
+offset_right = 128.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="EyesOrigin" type="Node2D" parent="EyeLids"]
+position = Vector2(0, -64)
+
+[node name="Eyes" type="Node2D" parent="EyeLids/EyesOrigin"]
+position = Vector2(128, 128)
+
+[node name="Circle" type="Node2D" parent="EyeLids/EyesOrigin/Eyes"]
+position = Vector2(-48, 0)
+rotation = 0.349066
+scale = Vector2(0.8, 1)
+script = ExtResource("1_ywvrp")
+radius = 64.0
+
+[node name="Circle2" type="Node2D" parent="EyeLids/EyesOrigin/Eyes"]
+position = Vector2(48, 0)
+rotation = -0.349066
+scale = Vector2(0.8, 1)
+script = ExtResource("1_ywvrp")
+radius = 64.0
+
+[node name="Pupils" type="Node2D" parent="EyeLids/EyesOrigin/Eyes"]
+
+[node name="Circle" type="Node2D" parent="EyeLids/EyesOrigin/Eyes/Pupils"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-48, 0)
+script = ExtResource("1_ywvrp")
+radius = 24.0
+
+[node name="Circle2" type="Node2D" parent="EyeLids/EyesOrigin/Eyes/Pupils"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(48, 0)
+script = ExtResource("1_ywvrp")
+radius = 24.0
+
+[node name="BlinkTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nvll6")
+}
+
+[connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

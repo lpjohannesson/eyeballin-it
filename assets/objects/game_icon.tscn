@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dckokhgs3rkk7"]
+
+[ext_resource type="Script" path="res://assets/objects/game_icon.gd" id="1_aun35"]
+[ext_resource type="PackedScene" uid="uid://c5ad6asgttnp6" path="res://assets/objects/grid_button.tscn" id="1_qjut5"]
+[ext_resource type="PackedScene" uid="uid://bt2tnovru170d" path="res://assets/objects/ball.tscn" id="2_1vdgl"]
+[ext_resource type="PackedScene" uid="uid://hrbr6oqq76o" path="res://assets/objects/player.tscn" id="3_lsb46"]
+
+[node name="GameIcon" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_aun35")
+player = NodePath("Player")
+
+[node name="GridButton" parent="." instance=ExtResource("1_qjut5")]
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="Ball" parent="." instance=ExtResource("2_1vdgl")]
+
+[node name="Player" parent="." instance=ExtResource("3_lsb46")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(6, 6)

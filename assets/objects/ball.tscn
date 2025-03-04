@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://bt2tnovru170d"]
+
+[ext_resource type="Script" path="res://assets/objects/ball.gd" id="1_6goht"]
+[ext_resource type="Script" path="res://assets/objects/circle.gd" id="1_tm12d"]
+[ext_resource type="Texture2D" uid="uid://caulq6gaitp0d" path="res://assets/textures/star.svg" id="3_uescg"]
+
+[sub_resource type="Curve" id="Curve_hbk28"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_wfmh6"]
+offsets = PackedFloat32Array(0, 0.157143, 0.437143, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Ball" type="Node2D" node_paths=PackedStringArray("circle", "stars")]
+script = ExtResource("1_6goht")
+circle = NodePath("Circle")
+stars = NodePath("Stars")
+
+[node name="Circle" type="Node2D" parent="."]
+modulate = Color(1, 0, 0.4, 1)
+script = ExtResource("1_tm12d")
+radius = 120.0
+
+[node name="Stars" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.6
+randomness = 0.5
+texture = ExtResource("3_uescg")
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+damping_min = 10.0
+damping_max = 20.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_hbk28")
+color_ramp = SubResource("Gradient_wfmh6")

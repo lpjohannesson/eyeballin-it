@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5ad6asgttnp6"]
+
+[ext_resource type="Script" path="res://assets/objects/grid_button.gd" id="1_gompo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oer14"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8m46"]
+bg_color = Color(0.370364, 0.370365, 0.370364, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufnsf"]
+bg_color = Color(0.281187, 0.281187, 0.281186, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="GridButton" type="Button"]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oer14")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n8m46")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ufnsf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n8m46")
+action_mode = 0
+script = ExtResource("1_gompo")

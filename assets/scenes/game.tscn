@@ -1,0 +1,609 @@
+[gd_scene load_steps=51 format=3 uid="uid://rixukvwqlhne"]
+
+[ext_resource type="Script" path="res://assets/scenes/game.gd" id="1_7srqn"]
+[ext_resource type="PackedScene" uid="uid://c5ad6asgttnp6" path="res://assets/objects/grid_button.tscn" id="2_324eg"]
+[ext_resource type="PackedScene" uid="uid://bt2tnovru170d" path="res://assets/objects/ball.tscn" id="2_jyoib"]
+[ext_resource type="PackedScene" uid="uid://hrbr6oqq76o" path="res://assets/objects/player.tscn" id="3_vf3sr"]
+[ext_resource type="Script" path="res://assets/objects/balls.gd" id="5_j8ys7"]
+[ext_resource type="Script" path="res://assets/objects/swipe_manager.gd" id="5_p68tp"]
+[ext_resource type="Script" path="res://assets/objects/score_manager.gd" id="5_ryfag"]
+[ext_resource type="Script" path="res://assets/objects/game_over_display.gd" id="6_45b44"]
+[ext_resource type="Texture2D" uid="uid://cqb0odi0pbxuh" path="res://assets/textures/camera.svg" id="7_y3hld"]
+[ext_resource type="Texture2D" uid="uid://b7wofoy0p4usa" path="res://assets/textures/restart.svg" id="8_aix45"]
+[ext_resource type="Script" path="res://assets/objects/tutorial_manager.gd" id="10_1m7dk"]
+[ext_resource type="PackedScene" uid="uid://cjpcxhchbbp1h" path="res://assets/objects/tutorial_hand.tscn" id="10_82dp8"]
+[ext_resource type="Script" path="res://assets/objects/ad_manager.gd" id="11_3gm1q"]
+[ext_resource type="Script" path="res://assets/objects/sounds.gd" id="12_ycr8i"]
+[ext_resource type="AudioStream" uid="uid://oddksv1qtv8i" path="res://assets/sounds/glimmer.wav" id="13_nl8sj"]
+[ext_resource type="AudioStream" uid="uid://fkmj23c48y4j" path="res://assets/sounds/grow.wav" id="14_sjjx7"]
+[ext_resource type="AudioStream" uid="uid://du2skhqm0hn3u" path="res://assets/sounds/lose.wav" id="15_tdufc"]
+[ext_resource type="AudioStream" uid="uid://d3kh65h1x4bl0" path="res://assets/sounds/pop.wav" id="16_cybfs"]
+[ext_resource type="AudioStream" uid="uid://c4xsgr8pe376b" path="res://assets/sounds/whoosh.wav" id="17_2oa4d"]
+[ext_resource type="AudioStream" uid="uid://bwe1wxnttvmg" path="res://assets/sounds/blink.wav" id="18_j46j4"]
+[ext_resource type="AudioStream" uid="uid://d3j3m7mx0ja5t" path="res://assets/sounds/click.wav" id="19_5n7hs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5jwrr"]
+bg_color = Color(0.44, 0.154, 0.1969, 0.498039)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="FontVariation" id="FontVariation_y52qn"]
+variation_embolden = 1.5
+spacing_glyph = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_mihcx"]
+font = SubResource("FontVariation_y52qn")
+font_size = 144
+outline_size = 48
+outline_color = Color(0.168627, 0.168627, 0.168627, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gpf4b"]
+font = SubResource("FontVariation_y52qn")
+font_size = 64
+font_color = Color(1, 0.733333, 0.2, 1)
+outline_size = 32
+outline_color = Color(0.168627, 0.168627, 0.168627, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_pkxtr"]
+variation_embolden = 0.5
+spacing_glyph = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npkq4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxyiw"]
+content_margin_right = 32.0
+bg_color = Color(1, 0.32, 0.32, 0.498039)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xuxrx"]
+content_margin_right = 32.0
+bg_color = Color(0.88, 0.1232, 0.186267, 0.498039)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="Animation" id="Animation_0y4gd"]
+resource_name = "end"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(1024, 1024), Vector2(1024, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(-512, -512), Vector2(-512, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer/GameOverLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Buttons:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4gyay"]
+resource_name = "game_over"
+length = 1.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(1024, 0), Vector2(1024, 1024)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(-512, 0), Vector2(-512, -512)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer/GameOverLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Buttons:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CenterContainer/GameOverLabel/NewHighScoreLabel:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.5, 0.8),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(395, -237), Vector2(395, -197)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CenterContainer/GameOverLabel/NewHighScoreLabel:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_td2dd"]
+_data = {
+"end": SubResource("Animation_0y4gd"),
+"game_over": SubResource("Animation_4gyay")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_g6nqt"]
+font = SubResource("FontVariation_y52qn")
+font_size = 128
+
+[sub_resource type="FontVariation" id="FontVariation_71c6n"]
+variation_embolden = 1.0
+spacing_glyph = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_7tkp5"]
+font = SubResource("FontVariation_71c6n")
+font_size = 64
+
+[sub_resource type="Animation" id="Animation_2366t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AddLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_76jqa"]
+resource_name = "add"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AddLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3elhd"]
+resource_name = "stop_add"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AddLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bcqt5"]
+_data = {
+"RESET": SubResource("Animation_2366t"),
+"add": SubResource("Animation_76jqa"),
+"stop_add": SubResource("Animation_3elhd")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7ydc"]
+bg_color = Color(0.32, 1, 0.875333, 0.498039)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iosia"]
+bg_color = Color(0.152, 0.739733, 0.76, 0.498039)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="Animation" id="Animation_458lh"]
+resource_name = "fade_in"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_spfq5"]
+resource_name = "init"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b2hsl"]
+_data = {
+"fade_in": SubResource("Animation_458lh"),
+"init": SubResource("Animation_spfq5")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3pl3q"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("13_nl8sj")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2uhiv"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("14_sjjx7")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_08tus"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("16_cybfs")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fj7ge"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("17_2oa4d")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_p0da8"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("18_j46j4")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6e23g"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("19_5n7hs")
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("sounds", "ad_manager", "grid", "balls", "players", "score", "game_over_display", "tutorial")]
+script = ExtResource("1_7srqn")
+grid_size = Vector2i(4, 4)
+move_duration = 0.2
+sounds = NodePath("Sounds")
+ad_manager = NodePath("AdManager")
+grid = NodePath("GameContent/GridContainer")
+balls = NodePath("GameContent/Balls")
+players = NodePath("GameContent/Players")
+score = NodePath("UI/ScoreManager")
+game_over_display = NodePath("UI/GameOverDisplay")
+tutorial = NodePath("TutorialManager")
+grid_button_scene = ExtResource("2_324eg")
+ball_scene = ExtResource("2_jyoib")
+player_scene = ExtResource("3_vf3sr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="GameContent" type="CenterContainer" parent="."]
+use_top_left = true
+
+[node name="GridContainer" type="GridContainer" parent="GameContent"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="Balls" type="Node2D" parent="GameContent"]
+script = ExtResource("5_j8ys7")
+colors = PackedColorArray(0, 0.666667, 1, 1, 1, 0.335691, 0.167386, 1, 0.759333, 0.24, 1, 1, 1, 0.733333, 0.2, 1, 1, 0, 0.4, 1, 0, 0.946672, 0.291508, 1)
+size_min = 60.0
+size_max = 120.0
+tween_duration = 0.15
+
+[node name="Players" type="Node2D" parent="GameContent"]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameOverDisplay" type="Control" parent="UI" node_paths=PackedStringArray("animation_player", "score", "new_high_score_label", "continue_button", "sounds")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("6_45b44")
+animation_player = NodePath("AnimationPlayer")
+score = NodePath("../ScoreManager")
+new_high_score_label = NodePath("CenterContainer/GameOverLabel/NewHighScoreLabel")
+continue_button = NodePath("Buttons/ContinueButton")
+sounds = NodePath("../../Sounds")
+
+[node name="Container" type="PanelContainer" parent="UI/GameOverDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -512.0
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5jwrr")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/GameOverDisplay"]
+layout_mode = 0
+offset_top = -256.0
+offset_bottom = -256.0
+use_top_left = true
+
+[node name="GameOverLabel" type="Label" parent="UI/GameOverDisplay/CenterContainer"]
+layout_mode = 2
+text = "GAME OVER!"
+label_settings = SubResource("LabelSettings_mihcx")
+
+[node name="NewHighScoreLabel" type="Label" parent="UI/GameOverDisplay/CenterContainer/GameOverLabel"]
+layout_mode = 0
+offset_left = 395.0
+offset_top = -197.0
+offset_right = 1008.0
+offset_bottom = -109.0
+rotation = 0.237945
+text = "NEW HIGH SCORE!"
+label_settings = SubResource("LabelSettings_gpf4b")
+
+[node name="Buttons" type="Control" parent="UI/GameOverDisplay"]
+anchors_preset = 0
+
+[node name="ContinueButton" type="Button" parent="UI/GameOverDisplay/Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 384.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("FontVariation_pkxtr")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_npkq4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uxyiw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xuxrx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_uxyiw")
+text = "Continue"
+icon = ExtResource("7_y3hld")
+icon_alignment = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/GameOverDisplay"]
+libraries = {
+"": SubResource("AnimationLibrary_td2dd")
+}
+
+[node name="ScoreManager" type="Control" parent="UI" node_paths=PackedStringArray("label", "high_label", "add_label", "add_timer", "animation_player")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("5_ryfag")
+label = NodePath("ScoreContainer/ScoreLabel")
+high_label = NodePath("HighScoreContainer/HighScoreLabel")
+add_label = NodePath("AddLabel")
+add_timer = NodePath("AddTimer")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="ScoreContainer" type="CenterContainer" parent="UI/ScoreManager"]
+layout_mode = 0
+offset_top = -640.0
+offset_bottom = -640.0
+use_top_left = true
+
+[node name="ScoreLabel" type="Label" parent="UI/ScoreManager/ScoreContainer"]
+layout_mode = 2
+text = "12345"
+label_settings = SubResource("LabelSettings_g6nqt")
+
+[node name="HighScoreContainer" type="CenterContainer" parent="UI/ScoreManager"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -760.0
+offset_right = 8.0
+offset_bottom = -760.0
+use_top_left = true
+
+[node name="HighScoreLabel" type="Label" parent="UI/ScoreManager/HighScoreContainer"]
+layout_mode = 2
+text = "High: 12345"
+label_settings = SubResource("LabelSettings_7tkp5")
+
+[node name="AddLabel" type="Label" parent="UI/ScoreManager"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = -744.0
+offset_right = 432.0
+offset_bottom = -569.0
+text = "+100"
+label_settings = SubResource("LabelSettings_gpf4b")
+
+[node name="AddTimer" type="Timer" parent="UI/ScoreManager"]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/ScoreManager"]
+libraries = {
+"": SubResource("AnimationLibrary_bcqt5")
+}
+
+[node name="RestartButton" type="Button" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 300.0
+offset_top = -756.0
+offset_right = 492.0
+offset_bottom = -564.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("FontVariation_pkxtr")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_npkq4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n7ydc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iosia")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n7ydc")
+icon = ExtResource("8_aix45")
+icon_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+libraries = {
+"": SubResource("AnimationLibrary_b2hsl")
+}
+autoplay = "init"
+
+[node name="TutorialManager" type="Control" parent="." node_paths=PackedStringArray("game", "ui", "ui_player", "hand")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("10_1m7dk")
+game = NodePath("..")
+ui = NodePath("../UI")
+ui_player = NodePath("../UI/AnimationPlayer")
+hand = NodePath("TutorialHand")
+
+[node name="TutorialHand" parent="TutorialManager" instance=ExtResource("10_82dp8")]
+
+[node name="SwipeManager" type="Node" parent="."]
+script = ExtResource("5_p68tp")
+min_swipe_length = 64.0
+
+[node name="AdManager" type="Node" parent="." node_paths=PackedStringArray("ad_timer")]
+script = ExtResource("11_3gm1q")
+ad_timer = NodePath("AdTimer")
+
+[node name="AdTimer" type="Timer" parent="AdManager"]
+wait_time = 180.0
+one_shot = true
+
+[node name="Sounds" type="Node" parent="."]
+script = ExtResource("12_ycr8i")
+
+[node name="Glimmer" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_3pl3q")
+
+[node name="Grow" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_2uhiv")
+
+[node name="Lose" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("15_tdufc")
+
+[node name="Pop" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_08tus")
+
+[node name="Whoosh" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_fj7ge")
+volume_db = -10.0
+
+[node name="Blink" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_p0da8")
+
+[node name="Click" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_6e23g")
+
+[connection signal="ball_selected" from="." to="TutorialManager" method="_on_game_ball_selected"]
+[connection signal="player_move_ended" from="." to="TutorialManager" method="_on_game_player_move_ended"]
+[connection signal="player_move_started" from="." to="TutorialManager" method="_on_game_player_move_started"]
+[connection signal="continue_pressed" from="UI/GameOverDisplay" to="." method="_on_game_over_display_continue_pressed"]
+[connection signal="pressed" from="UI/GameOverDisplay/Buttons/ContinueButton" to="UI/GameOverDisplay" method="_on_continue_button_pressed"]
+[connection signal="timeout" from="UI/ScoreManager/AddTimer" to="UI/ScoreManager" method="_on_add_timer_timeout"]
+[connection signal="pressed" from="UI/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="swiped" from="SwipeManager" to="." method="_on_swipe_manager_swiped"]
