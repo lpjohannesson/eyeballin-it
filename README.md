@@ -8,6 +8,8 @@
 
 An Android-based puzzle game I created as a personal project with Godot Engine. Combine coloured circles and create lines to beat your high score!
 
+[Click here to play the game online!](https://lpjohannesson.github.io/eyeballin-it/)
+
 ## Special features
 - Ad integration with the Godot AdMob addon and test units (banner, intersitial, rewarded)
 - Tutorial section
