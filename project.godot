@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Eyeballin' It"
 run/main_scene="res://assets/scenes/game.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0.168627, 0.168627, 0.168627, 1)
 boot_splash/image="res://icon.png"
 config/icon="res://icon.png"
